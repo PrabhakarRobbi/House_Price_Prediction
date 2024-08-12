@@ -107,7 +107,8 @@ To run the Flask application, follow these steps:
 
 Here are some snapshots of the application:
 ### Form Submission
-![Screenshot 4](./templates/snapshots/Screenshot%20(4).png)
+![Screenshot](templates/sanpshots/Screenshot%20(4).png)
+
 ![Screenshot 5](./templates/snapshots/Screenshot%20(5).png)
 
 ### Response
