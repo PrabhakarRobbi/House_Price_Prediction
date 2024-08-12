@@ -29,7 +29,7 @@ To run this application locally, you'll need to have Python installed. Follow th
 ### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/house-price-prediction.git
+git clone https://github.com/PrabhakarRobbi/house-price-prediction.git
 cd house-price-prediction
 ```
 
