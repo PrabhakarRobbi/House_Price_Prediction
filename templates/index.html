@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #e0f7fa;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #0288d1;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #0288d1;
+            color: #fff;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        #predictedPrice {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        button {
+            background-color: #0288d1;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>House Price Prediction</h1>
+    </header>
+    <main>
+        <p>Welcome to the House Price Prediction Model!</p>
+
+        <!-- Form for input fields -->
+        <form id="predictionForm" class="needs-validation" novalidate>
+            <div class="form-group">
+                <label for="beds">Bedrooms:</label>
+                <select id="beds" name="beds" class="form-control" required>
+                    <option value="" disabled selected>Select number of bedrooms</option>
+                    {% for bedroom in bedrooms %}
+                        <option value="{{ bedroom }}">{{ bedroom }}</option>
+                    {% endfor %}
+                </select>
+                <div class="invalid-feedback">Please select the number of bedrooms.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="baths">Baths:</label>
+                <select id="baths" name="baths" class="form-control" required>
+                    <option value="" disabled selected>Select number of bathrooms</option>
+                    {% for bathroom in bathrooms %}
+                        <option value="{{ bathroom }}">{{ bathroom }}</option>
+                    {% endfor %}
+                </select>
+                <div class="invalid-feedback">Please select the number of bathrooms.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="size">Size:</label>
+                <select id="size" name="size" class="form-control" required>
+                    <option value="" disabled selected>Select size of the house</option>
+                    {% for house_size in sizes %}
+                        <option value="{{ house_size }}">{{ house_size }} sqft</option>
+                    {% endfor %}
+                </select>
+                <div class="invalid-feedback">Please select the size of the house.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="zip_code">Zip Code:</label>
+                <select id="zip_code" name="zip_code" class="form-control" required>
+                    <option value="" disabled selected>Select zip code</option>
+                    {% for zip_code in zip_codes %}
+                        <option value="{{ zip_code }}">{{ zip_code }}</option>
+                    {% endfor %}
+                </select>
+                <div class="invalid-feedback">Please select the zip code.</div>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-block" onclick="sendData()">Predict Price</button>
+
+            <!-- Space for displaying predicted price -->
+            <div id="predictedPrice"></div>
+        </form>
+    </main>
+    <footer>
+        <p>&copy; 2024 House Price Prediction. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Fetch options for each dropdown on page load
+        window.onload = function() {
+            fetchOptions('/bedrooms', 'beds');
+            fetchOptions('/bathrooms', 'baths');
+            fetchOptions('/sizes', 'size');
+            fetchOptions('/zip_codes', 'zip_code');
+        };
+
+        // JavaScript function to send data and receive predicted price
+        function sendData() {
+            const form = document.getElementById('predictionForm');
+            const formData = new FormData(form);
+
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(price => {
+                document.getElementById("predictedPrice").innerHTML = "Price: INR " + price;
+            });
+        }
+
+        // Bootstrap form validation
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var forms = document.getElementsByClassName('needs-validation');
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+</body>
+</html>
