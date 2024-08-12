@@ -109,8 +109,7 @@ Here are some snapshots of the application:
 ### Form Submission
 ![Screenshot](templates/sanpshots/Screenshot%20(4).png)
 ### Response
-![Screenshot](templates/snapshots/Screenshot%20(5).png)
-
+![Screenshot](templates/sanpshots/Screenshot%20(5).png)
 
 ## License
 
